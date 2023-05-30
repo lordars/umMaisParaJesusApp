@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "30496650652",
+    "firebase_url": "https://ummaisprajesusapp-default-rtdb.firebaseio.com",
+    "project_id": "ummaisprajesusapp",
+    "storage_bucket": "ummaisprajesusapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30496650652:android:9de70dd2624ea011750459",
+        "android_client_info": {
+          "package_name": "com.company.appname"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30496650652-9vlhj8mk0kat2r409vhc3b5hq4r7eqjo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-n1vcq2gOXM4VsWrObF_25c5dE1dgzYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30496650652-9vlhj8mk0kat2r409vhc3b5hq4r7eqjo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30496650652:android:add7fbac51b9465c750459",
+        "android_client_info": {
+          "package_name": "com.example.ummaisjesus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30496650652-9vlhj8mk0kat2r409vhc3b5hq4r7eqjo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-n1vcq2gOXM4VsWrObF_25c5dE1dgzYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30496650652-9vlhj8mk0kat2r409vhc3b5hq4r7eqjo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
