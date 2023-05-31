@@ -298,7 +298,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                       height: 50,
                       child: Image.asset(
-                        "assets/MaisUm.png",
+                        "assets/LogoAcampaMaisUmPraJesus.png",
                         fit: BoxFit.contain,
                       )),
                   const SizedBox(
