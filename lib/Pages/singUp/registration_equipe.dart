@@ -170,7 +170,7 @@ class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
                           onPressed: () {
                             launchUrl(_url);
                           },
-                          child: Text('AGORA QUE DEBO FAZER(OPERAÇÕES)')),
+                          child: Text('AGORA O QUE DEVO FAZER? (OPERAÇÕES)')),
                     ],
                   )),
             ),

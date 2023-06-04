@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                                         const RegistratiionPage()));
                           },
                           child: const Text(
-                            "SingUP",
+                            " Sign-UP",
                             style: TextStyle(
                                 color: Colors.redAccent,
                                 fontWeight: FontWeight.w400,

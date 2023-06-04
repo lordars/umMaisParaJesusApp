@@ -1,6 +1,3 @@
-import 'dart:html';
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -238,7 +235,7 @@ class _HomePageState extends State<HomePage> {
     final Voltar = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(10),
-      color: Colors.black,
+      color: Colors.redAccent,
       child: MaterialButton(
           onPressed: () {
             Navigator.of(context).pushReplacement(
@@ -252,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 WidgetSpan(
                   child: Icon(
-                    Icons.arrow_forward_ios_rounded,
+                    Icons.arrow_back,
                     size: 14,
                     color: Colors.white,
                   ),
@@ -352,7 +349,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Row(
                     children: [
-                      Text("Pontos totales: "),
+                      Text("Pontos totais: "),
                       Text(
                         pontosTotales.toString(),
                         style: TextStyle(
@@ -366,12 +363,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Row(
                     children: [
-                      const Text("Acrecentarndo ou tirando pontos:"),
+                      const Text("Acrescentando ou tirando pontos:"),
                       Text(
                         valorIncemental.toString(),
                         style: const TextStyle(
                           color: Color.fromARGB(255, 25, 167, 210),
-                          fontSize: 72,
+                          fontSize: 70,
                         ),
                       ),
                     ],

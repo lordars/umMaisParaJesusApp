@@ -203,7 +203,7 @@ class _RegistratiionPageState extends State<RegistratiionPage> {
                     SizedBox(
                         height: 200,
                         child: Image.asset(
-                          "assets/MaisUm.png",
+                          "assets/LogoAcampaMaisUmPraJesus.png",
                           fit: BoxFit.contain,
                         )),
                     const SizedBox(
