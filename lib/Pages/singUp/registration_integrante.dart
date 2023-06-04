@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ummaisjesus/shared/models/integrantes_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,14 +10,17 @@ import 'package:ummaisjesus/Pages/equipes/equipes_page.dart';
 
 import 'package:ummaisjesus/shared/models/equipes_model.dart';
 
-class RegistratiionEquipe extends StatefulWidget {
-  const RegistratiionEquipe({super.key});
+class RegistratiionIntegrante extends StatefulWidget {
+  EquipesModel equip;
+
+  RegistratiionIntegrante(this.equip, {super.key});
 
   @override
-  State<RegistratiionEquipe> createState() => _RegistratiionEquipeState();
+  State<RegistratiionIntegrante> createState() =>
+      _RegistratiionIntegranteState();
 }
 
-class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
+class _RegistratiionIntegranteState extends State<RegistratiionIntegrante> {
   //firebase
 
   // our form key
@@ -40,7 +41,7 @@ class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
       validator: (value) {
         RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
-          return ("Please enter your equipe name");
+          return ("Please enter your integrante name");
         }
         if (!regex.hasMatch(value)) {
           return ("your name  minimun 3 charater");
@@ -54,7 +55,7 @@ class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.group),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Nome da equipe",
+          hintText: "Nome  do novo  integrante",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
@@ -63,8 +64,12 @@ class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
       controller: equipeIntegrantesController,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
+        RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
-          return ("Please enter your equipe name");
+          return ("observação inicial vacia");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("minimun 3 charater");
         }
 
         return null;
@@ -76,7 +81,7 @@ class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.group),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: " Adrián, João , pedro, jose",
+          hintText: "Observação inicial",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 //second name
@@ -90,10 +95,10 @@ class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          createEquipe2(nome: equipeNameController.text, pontos: '50');
+          createEquipe2();
         },
         child: const Text(
-          "Cadastrar Equipe",
+          "Cadastrar Integrante",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -141,12 +146,7 @@ class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(
-                          height: 200,
-                          child: Image.asset(
-                            "assets/LogoAcampaMaisUmPraJesus.png",
-                            fit: BoxFit.contain,
-                          )),
+                      Text("Equipe: ${widget.equip.nome}"),
                       const SizedBox(
                         height: 25,
                       ),
@@ -163,14 +163,6 @@ class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
                         height: 25,
                       ),
                       EquipButton,
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            launchUrl(_url);
-                          },
-                          child: Text('AGORA QUE DEBO FAZER(OPERAÇÕES)')),
                     ],
                   )),
             ),
@@ -180,47 +172,31 @@ class _RegistratiionEquipeState extends State<RegistratiionEquipe> {
     );
   }
 
-  Future createEquipe({required String name, required String pontos}) async {
-    final docEquip = FirebaseFirestore.instance.collection('equipes').doc();
-
-    final json = {
-      'id': docEquip.id,
-      'name': name,
-      'pontos': pontos,
-      'obs': ["time criado"],
-      'integrantes': ["empy"],
-    };
-
-    await docEquip.set(json);
-  }
-
-  Future createEquipe2({required String nome, required String pontos}) async {
+  Future createEquipe2() async {
     if (_formKey.currentState!.validate()) {
-      final docEquip = FirebaseFirestore.instance.collection('equipes').doc();
+      final docEquip = FirebaseFirestore.instance
+          .collection('equipes')
+          .doc("${widget.equip.id}");
+
+      // if (widget.equip.integrantes != null) {
+      //   widget.equip.integrantes?.add(Integrantes(
+      //       nomeInt: equipeNameController.text,
+      //       pontosInt: "0",
+      //       obsInt: [equipeIntegrantesController.text],
+      //       id: getCustomUniqueId()));
+      // }
 
       final equipeModel2 = EquipesModel(
         id: docEquip.id,
-        nome: nome,
-        pontos: pontos,
-        obs: ['obs'],
-        integrantes: [equipeIntegrantesController.text],
+        nome: widget.equip.nome,
+        pontos: widget.equip.pontos,
+        obs: widget.equip.obs,
+        integrantes: widget.equip.integrantes,
       );
-      // final equipeModel2 = EquipesModel(
-      //   id: docEquip.id,
-      //   nome: nome,
-      //   pontos: pontos,
-      //   obs: ['obs'],
-      //   integrantes: Integrantes.fromJson({
-      //     'id': getCustomUniqueId(),
-      //     'nome': equipeIntegrantesController.text,
-      //     'pontos': "0",
-      //     'obs': ["Lider do time"]
-      //   }),
-      // );
 
-      // final json = equipeModel2.toJson();
+      final json = equipeModel2.toJson();
 
-      await docEquip.set(equipeModel2.toJson());
+      await docEquip.update(equipeModel2.toJson());
 
       Fluttertoast.showToast(msg: "Account create succesfull");
 

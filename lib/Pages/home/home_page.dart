@@ -1,12 +1,17 @@
+import 'dart:html';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ummaisjesus/Pages/equipes/description_team_page.dart';
 import 'package:ummaisjesus/Pages/equipes/equipes_page.dart';
+import 'package:ummaisjesus/Pages/equipes/team_description_page.dart';
 import 'package:ummaisjesus/Pages/login/login_page.dart';
 
 import 'package:ummaisjesus/shared/models/equipes_model.dart';
+import 'package:ummaisjesus/shared/models/integrantes_model.dart';
 import 'package:ummaisjesus/shared/models/user_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -56,7 +61,7 @@ class _HomePageState extends State<HomePage> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.question_answer),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Describe o porque dos pontos",
+          hintText: "Describe e nome porque dos pontos",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
@@ -229,12 +234,66 @@ class _HomePageState extends State<HomePage> {
             ),
           )),
     );
+//Puntuar button
+    final Voltar = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(10),
+      color: Colors.black,
+      child: MaterialButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (contex) => EquipePage()));
+          },
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "Voltar ",
+                ),
+                WidgetSpan(
+                  child: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 14,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          )),
+    );
+//Puntuar time
+    final putPointTime = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(10),
+      color: Color.fromARGB(255, 155, 53, 22),
+      child: MaterialButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (contex) => TeamPage(widget.equip)));
+          },
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "Ver o Time ",
+                ),
+                WidgetSpan(
+                  child: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 14,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          )),
+    );
 
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "info ->",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          "Observação --->",
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
           IconButton(
@@ -248,27 +307,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             width: 30,
           ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "${loggedInUser.firstName ?? "loco"} ${loggedInUser.secondName ?? "loco"}",
-                  style: const TextStyle(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 10),
-                ),
-              ),
-              Text(
-                loggedInUser.email ?? "loco",
-                style: const TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 10),
-              ),
-            ],
-          ),
+
           IconButton(
               onPressed: () {
                 logOut(context);
@@ -342,34 +381,28 @@ class _HomePageState extends State<HomePage> {
                     height: 25,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      maisUm,
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      menosUm,
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      putPoint,
+                      SizedBox(width: 150, child: maisUm),
+                      SizedBox(width: 150, child: menosUm),
                     ],
                   ),
                   const SizedBox(
                     height: 25,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      atividadesPont,
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      atividadesPontNeg,
+                      SizedBox(width: 150, child: atividadesPont),
+                      SizedBox(width: 150, child: atividadesPontNeg),
                     ],
                   ),
                   const SizedBox(
                     height: 25,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       festa,
                       const SizedBox(
@@ -385,21 +418,46 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 25,
                   ),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: putPoint),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Voltar,
+                  ),
+                  // SizedBox(
+                  //     width: MediaQuery.of(context).size.width,
+                  //     child: putPointTime),
+                  const SizedBox(
+                    height: 25,
+                  ),
                   ElevatedButton(
                       onPressed: () {
                         _showMyDialog();
                       },
                       child: Center(
-                        child: Row(
-                          children: [
-                            Text(
-                              "Apagar equipe",
-                              style: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.w800),
-                            ),
-                            Icon(Icons.delete_forever)
-                          ],
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Center(
+                                  child: Text(
+                                    "Apagar equipe",
+                                    style: TextStyle(
+                                      color: Colors.redAccent,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Icon(Icons.delete_forever)
+                            ],
+                          ),
                         ),
                       ))
                 ]),
@@ -448,11 +506,11 @@ class _HomePageState extends State<HomePage> {
     }
     print(equip.obs);
     final docUser = firebaseFirestore.collection("equipes").doc(equip.id);
+
     docUser.update({
       'nome': equip.nome.toString(),
       'pontos': pontos.toString(),
       'obs': equip.obs?.map((e) => e),
-      'integrantes': ['integrantes', "test"]
     });
     Fluttertoast.showToast(msg: "Account create succesfull");
 
@@ -481,7 +539,7 @@ class _HomePageState extends State<HomePage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('AlertDialog Title'),
+          title: const Text('Está por apagar o equipe!!'),
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -492,7 +550,7 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Approve'),
+              child: const Text('apagar o equipe'),
               onPressed: () {
                 Navigator.of(context).pop();
                 _delete(widget.equip.id.toString());

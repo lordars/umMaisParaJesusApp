@@ -18,7 +18,7 @@ class _EquipePageState extends State<EquipePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Um Mais Para Jesus TEAMs")),
+      appBar: AppBar(title: const Text("Um Mais Para Jesus ")),
       body: StreamBuilder<List<EquipesModel>>(
           stream: readEquipes(),
           builder: (context, snapshot) {
@@ -48,9 +48,8 @@ class _EquipePageState extends State<EquipePage> {
         children: [
           ListTile(
             leading: CircleAvatar(child: Text('${equipe?.pontos}')),
-            title: Text("${equipe?.nome}"),
-            subtitle: Text(
-                "${equipe.integrantes != null ? equipe.integrantes : "sem integrantes"}"),
+            title: Text("${equipe?.nome ?? ""}"),
+            subtitle: Text("${equipe.integrantes?.map((e) => e) ?? ""}"),
             onTap: () {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (contex) => HomePage(equipe)));

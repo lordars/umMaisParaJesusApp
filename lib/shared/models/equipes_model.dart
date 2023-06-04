@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ummaisjesus/shared/models/integrantes_model.dart';
 
 class EquipesModel {
   final String? id;
   final String nome;
   final String pontos;
+  // final List<Integrantes>? integrantes;
   final List<String>? integrantes;
   final List<String>? obs;
 
@@ -59,8 +61,9 @@ class EquipesModel {
         'id': id,
         'nome': nome,
         'pontos': pontos,
-        'integrantes': integrantes,
-        'obs': obs
+        //  'integrantes': List.from(integrantes?.map((e) => e.toJson()) ?? {}),
+        'obs': obs,
+        'integrantes': integrantes
       };
 
   //obs: json?['obs'] is Iterable ? [] : null,
@@ -69,7 +72,10 @@ class EquipesModel {
         nome: json['nome'],
         pontos: json['pontos'],
         id: json['id'],
-        obs: List.from(json?['obs']),
-        integrantes: List.from(json?['integrantes']),
+        obs: List.from(json?['obs'] ?? "empy"),
+        integrantes: List.from(json?['integrantes'] ?? "empy"),
+        //  integrantes: List.from(Integrantes.fromJson(json["integrantes"][0]))
+
+        //integrantes: List.from(json?['integrantes']),
       );
 }
