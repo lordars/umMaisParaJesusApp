@@ -1,4 +1,4 @@
-# um mais jesus
+# um mais para jesus
 
 é um aplicativo usado nossos acampamentos da igreja, con a finalidade dar puntuação nos acampantes.
 
